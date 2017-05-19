@@ -48,16 +48,9 @@ public class WebPage {
 		
 		try {
 			_document = Jsoup.connect(_anchor.GetAnchorUrl()).get();
-			//Elements docas = _document.select("div");
-			
-			//for(Element e : docas){
-			//	System.out.println(e.attr("class"));
-			//}
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			Logger.getLogger(WebPage.class.getName()).log(Level.SEVERE, null, e);
-			//e.printStackTrace();
 		}
 	}
 	
