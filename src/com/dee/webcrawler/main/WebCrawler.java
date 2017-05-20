@@ -6,31 +6,35 @@ import com.dee.webcrawler.bal.WebPage;
 
 public class WebCrawler {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		try {
-			String URLstr = "http://www.imdb.com/title/tt";
-            String URLNum = "114709";
-            
-			Domain dm = new Domain(URLstr + URLNum);
-			Anchor ac = new Anchor(dm, URLstr + URLNum);
-			WebPage wp = new WebPage(ac);
-			
-			System.out.println("Start getting web.");
-			wp.loadDocumentFromWeb();
-			String str;
-            str = wp.getTextFrom();
-			
-			System.out.println(str.substring(12,str.indexOf(".")));
-			
-			
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
-		System.out.println("App exit.");
-		
+	private Domain _domain;
+	private Anchor _anchor;
+	private WebPage _webpage;
+	private String _nameDirector;
+	
+	public WebCrawler(){
 		
 	}
+	
+	public void UpdatePage(String urlstr, String urlnum){
+		try {
+			_domain = new Domain(urlstr + urlnum);
+			_anchor = new Anchor(_domain, urlstr + urlnum);
+			_webpage = new WebPage(_anchor);
+			_webpage.loadDocumentFromWeb();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public String GetDirectorName(){
+		String contents;
+		contents = _webpage.getTextFrom();
+		_nameDirector = contents.substring(12,contents.indexOf("."));
+		return _nameDirector;
+	}
+	
+	
+	
 
 }
