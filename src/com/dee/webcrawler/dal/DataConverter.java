@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 
 public class DataConverter {
-
 	private String _dataFileDir;
 	private BufferedReader _brSourceData;
 	private BufferedWriter _bwNewData;
