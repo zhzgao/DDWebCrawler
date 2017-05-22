@@ -10,6 +10,7 @@ public class RunCrawler {
 	public static void main(String[] args) {
 
 		WebCrawler myCrawler = new WebCrawler();
+		int jobCounter = 0;
 		
 		try {
 			BufferedReader SourceData = new BufferedReader(new FileReader("data/samplelinks.csv"));
@@ -24,9 +25,13 @@ public class RunCrawler {
                 String str;
                 str = myCrawler.GetDirectorName();
                 NewData.write(Elments[1] + ',' + str + "\n");
+                jobCounter++;
+                System.out.println("[Tracing]Job " + jobCounter + " is done!");
 	        }
 	        SourceData.close();
 	        NewData.close();
+	        System.out.println("[Crawler]All works finished!");
+	        
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
