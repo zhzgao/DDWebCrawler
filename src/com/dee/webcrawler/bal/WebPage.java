@@ -2,6 +2,7 @@ package com.dee.webcrawler.bal;
 
 import java.io.IOException;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -53,14 +54,17 @@ public class WebPage {
 		
 		try {
 			try{
+				System.out.println("\n======= Jsoup Connection =======");
+				System.out.println("Connecting...");
+				Thread.sleep(1500);
 				_document = Jsoup.connect(_anchor.GetAnchorUrl()).get();
-			}catch (SocketException se){ //handle socket exception, may cuz caused by TCP reset
+				System.out.println("Connected and got document.");
+			}catch (SocketException|SocketTimeoutException se){ //handle socket exception, may cuz caused by TCP reset
 				_socketExpCounter++;
 				System.out.println("\nSocketException! Times: " + _socketExpCounter);
 				se.printStackTrace();
 				try {
 					Thread.sleep(10000);
-					
 					loadDocumentFromWeb();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
@@ -68,22 +72,25 @@ public class WebPage {
 				}
 			}
 			
-		} catch (IOException e) {
+		} catch (IOException|InterruptedException e) {
 			Logger.getLogger(WebPage.class.getName()).log(Level.SEVERE, null, e);
 		} 
 	}
 	
 	public String getTextFrom(){
-		Elements docas = _document.select("meta");
 		String targetText = null;
 		
-		//System.out.println("Elements scaning!");
-		for(Element e : docas){
-			if(e.attr("name").toString().equals("description")){
-				targetText = e.attr("content").toString();
+		if(_document!=null){
+			System.out.println("[Tracing]Document is not null, start extracting contents...");
+			Elements docas = _document.select("meta");
+			//System.out.println("Elements scaning!");
+			for(Element e : docas){
+				if(e.attr("name").toString().equals("description")){
+					targetText = e.attr("content").toString();
+					System.out.println("[Tracing]Contents found: " + targetText);
+				}
 			}
 		}
-		
 		return targetText;
 	}
 	
