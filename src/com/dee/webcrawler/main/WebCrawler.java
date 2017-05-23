@@ -17,9 +17,13 @@ public class WebCrawler {
 	
 	public void UpdatePage(String urlstr, String urlnum){
 		try {
+			System.out.println("[Tracing]Crawler page updating...");
 			_domain = new Domain(urlstr + urlnum);
+			System.out.println("[Tracing]Domain has been created to: " + _domain.GetDomainUrl());
 			_anchor = new Anchor(_domain, urlstr + urlnum);
+			System.out.println("[Tracing]Anchor has been created to: " + _anchor.GetAnchorUrl());
 			_webpage = new WebPage(_anchor);
+			System.out.println("[Tracing]WebPage has been created.");
 			_webpage.loadDocumentFromWeb();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -30,7 +34,13 @@ public class WebCrawler {
 	public String GetDirectorName(){
 		String contents;
 		contents = _webpage.getTextFrom();
-		_nameDirector = contents.substring(12,contents.indexOf("."));
+		
+		if(contents!=null){
+			_nameDirector = contents.substring(12,contents.indexOf("."));
+		}else{
+			_nameDirector = "Error";
+		}
+		
 		return _nameDirector;
 	}
 	

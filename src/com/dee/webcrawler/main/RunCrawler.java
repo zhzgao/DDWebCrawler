@@ -13,11 +13,12 @@ public class RunCrawler {
 		int jobCounter = 0;
 		
 		try {
-			BufferedReader SourceData = new BufferedReader(new FileReader("data/samplelinks.csv"));
+			BufferedReader SourceData = new BufferedReader(new FileReader("data/links.csv"));
 			BufferedWriter NewData = new BufferedWriter(new FileWriter("data/result.csv"));
 			String temp = null;
 			SourceData.readLine();//skip first line
 	        while ((temp = SourceData.readLine()) != null){
+	        	System.out.println("\n\n======= Job " + (jobCounter+1) + " processing =======");
                 String[] Elments = temp.split(",");
                 String URLstr = "http://www.imdb.com/title/tt";
                 String URLNum = Elments[1];
